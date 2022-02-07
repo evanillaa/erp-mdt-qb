@@ -3,16 +3,12 @@
 -- ######################################################
 
 GetPlayerLicenses = function(identifier, type)
-    if type == "weapon" then
-        return true -- Return True If Player Have Weapon License If Not Then Return False
-    elseif type == "pilot" then
-        return true -- Return True If Player Have Pilot License If Not Then Return False
-    elseif type == "car" then
-        return true -- Return True If Player Have Car License If Not Then Return False
-    elseif type == "truck" then
-        return true -- Return True If Player Have Truck License If Not Then Return False
-    elseif type == "bike" then
-        return true -- Return True If Player Have Bike License If Not Then Return False
+    local result = SQL('SELECT * FROM players WHERE citizenid = @identifier', {['@identifier'] = identifier})
+    if result[1] ~= nil then
+        local metadata = result[1].metadata
+        if metadata.licenses[type] ~= nil and metadata.licenses[type] then
+            return true -- Return True If Player Have Weapon License If Not Then Return False
+        end
     end
 end
 
