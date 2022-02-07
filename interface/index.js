@@ -99,7 +99,7 @@ $(document).ready(() => {
     });
     $(".profile-items").on("click", ".profile-item", function () {
         let id = $(this).data("id");
-        $.post('https://unique-mdt/getProfileData', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/getProfileData`, JSON.stringify({
             id: id
         }));
     })
@@ -153,7 +153,7 @@ $(document).ready(() => {
             let title = $(this).find(".bulletin-item-title").text()
             let info = $(this).find(".bulletin-item-info").text()
             let time = new Date()
-            $.post('https://unique-mdt/newBulletin', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/newBulletin`, JSON.stringify({
                 title: title,
                 info: info,
                 time: time.getTime()
@@ -186,7 +186,7 @@ $(document).ready(() => {
         let BulletinId = $(this).data("info")
         let time = new Date()
         $(".bulletin-items-continer").find("[data-id='" + BulletinId + "']").remove();
-        $.post('https://unique-mdt/deleteBulletin', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/deleteBulletin`, JSON.stringify({
             id: BulletinId,
             time: time.getTime()
         }));
@@ -225,7 +225,7 @@ $(document).ready(() => {
                 $('.gallery-inner-container').prepend(`<img src="${URL}" class="gallery-img ${randomNum}" onerror="this.src='https://cdn.discordapp.com/attachments/770324167894761522/912602343164502096/not-found.jpg'">`);
                 setTimeout(() => {
                     URL = $("." + randomNum).attr("src")
-                    $.post('https://unique-mdt/addGalleryImg', JSON.stringify({
+                    $.post(`https://${GetParentResourceName()}/addGalleryImg`, JSON.stringify({
                         cid: cid,
                         URL: URL
                     }));
@@ -263,7 +263,7 @@ $(document).ready(() => {
                 const fName = $(".manage-profile-name-input-1").val()
                 const sName = $(".manage-profile-name-input-2").val()
 
-                $.post('https://unique-mdt/saveProfile', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/saveProfile`, JSON.stringify({
                     pfp: pfp,
                     description: description,
                     id: id,
@@ -354,7 +354,7 @@ $(document).ready(() => {
                 })
             })
 
-            $.post('https://unique-mdt/saveIncident', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/saveIncident`, JSON.stringify({
                 ID: dbid,
                 title: title,
                 information: information,
@@ -375,7 +375,7 @@ $(document).ready(() => {
                         $(".incidents-search-refresh").empty();
                         $(".incidents-search-refresh").html("Refresh");
                         canRefreshIncidents = true
-                        $.post('https://unique-mdt/getAllIncidents', JSON.stringify({}));
+                        $.post(`https://${GetParentResourceName()}/getAllIncidents`, JSON.stringify({}));
                     }, 1500);
                 }
             }, 1000);
@@ -482,13 +482,13 @@ $(document).ready(() => {
            $(".dmv-search-input").css("display", "block")
            setTimeout(() => {
                $("#dmv-search-input:text").val(plate.toString());
-               $.post('https://unique-mdt/searchVehicles', JSON.stringify({
+               $.post(`https://${GetParentResourceName()}/searchVehicles`, JSON.stringify({
                    name: plate.toString()
                }));
                $(".dmv-items").empty();
                 $('.dmv-items').prepend(`<div class="profile-loader"></div>`);
                setTimeout(() => {
-                   $.post('https://unique-mdt/getVehicleData', JSON.stringify({
+                   $.post(`https://${GetParentResourceName()}/getVehicleData`, JSON.stringify({
                        plate: plate.toString()
                    }));
                }, 250);
@@ -506,13 +506,13 @@ $(document).ready(() => {
             $(".weapons-search-input").css("display", "block")
             setTimeout(() => {
                 $("#weapons-search-input:text").val(plate.toString());
-                $.post('https://unique-mdt/searchWeapon', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchWeapon`, JSON.stringify({
                     name: plate.toString()
                 }));
                 $(".weapons-items").empty();
                 $('.weapons-items').prepend(`<div class="profile-loader"></div>`);
                 setTimeout(() => {
-                    $.post('https://unique-mdt/getWeaponData', JSON.stringify({
+                    $.post(`https://${GetParentResourceName()}/getWeaponData`, JSON.stringify({
                         serialnumber: plate.toString()
                     }));
                 }, 250);
@@ -613,7 +613,7 @@ $(document).ready(() => {
         }
     })
     $(".contextmenu").on("click", ".revoke-licence", function () {
-        $.post('https://unique-mdt/updateLicence', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/updateLicence`, JSON.stringify({
             cid: $(".manage-profile-citizenid-input").val(),
             type: $(this).data("info"),
             status: "revoke"
@@ -623,7 +623,7 @@ $(document).ready(() => {
         onMouseDown()
     })
     $(".contextmenu").on("click", ".give-licence", function () {
-        $.post('https://unique-mdt/updateLicence', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/updateLicence`, JSON.stringify({
             cid: $(".manage-profile-citizenid-input").val(),
             type: $(this).data("info"),
             status: "give"
@@ -650,7 +650,7 @@ $(document).ready(() => {
             let name = $("#profile-search-input").val()
             if (name !== "") {
                 canSearchForProfiles = false
-                $.post('https://unique-mdt/searchProfiles', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchProfiles`, JSON.stringify({
                     name: name
                 }));
                 $(".profile-items").empty();
@@ -676,7 +676,7 @@ $(document).ready(() => {
             let incident = $("#incidents-search-input").val()
             if (incident !== "") {
                 canSearchForProfiles = false
-                $.post('https://unique-mdt/searchIncidents', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchIncidents`, JSON.stringify({
                     incident: incident
                 }));
                 $(".incidents-items").empty();
@@ -690,7 +690,7 @@ $(document).ready(() => {
         if (keyCode === 13 && !e.shiftKey) {
             e.preventDefault()
             const time = new Date()
-            $.post('https://unique-mdt/dispatchMessage', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/dispatchMessage`, JSON.stringify({
                 message: $(this).val(),
                 time: time.getTime()
             }));
@@ -700,7 +700,7 @@ $(document).ready(() => {
 
     $(".incidents-items").on("click", ".incidents-item", function () {
         const id = $(this).data("id");
-        $.post('https://unique-mdt/getIncidentData', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/getIncidentData`, JSON.stringify({
             id: id
         }));
     })
@@ -714,13 +714,13 @@ $(document).ready(() => {
             setTimeout(() => {
                 $("#profile-search-input:text").val(name);
                 canSearchForProfiles = false
-                $.post('https://unique-mdt/searchProfiles', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchProfiles`, JSON.stringify({
                     name: name
                 }));
                 $(".profile-items").empty();
                 $('.profile-items').prepend(`<div class="profile-loader"></div>`);
                 setTimeout(() => {
-                    $.post('https://unique-mdt/getProfileData', JSON.stringify({
+                    $.post(`https://${GetParentResourceName()}/getProfileData`, JSON.stringify({
                         id: name
                     }));
                 }, 250);
@@ -775,7 +775,7 @@ $(document).ready(() => {
             }
 
             if (shouldClose == true) {
-                $.post('https://unique-mdt/escape', JSON.stringify({}));
+                $.post(`https://${GetParentResourceName()}/escape`, JSON.stringify({}));
             }
         }
     };
@@ -792,7 +792,7 @@ $(document).ready(() => {
     $(".icidents-person-search-name-input").on("keydown", "", function (e) {
         if (e.keyCode === 13) {
             let name = $(".icidents-person-search-name-input").val();
-            $.post('https://unique-mdt/incidentSearchPerson', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/incidentSearchPerson`, JSON.stringify({
                 name: name
             }));
         }
@@ -954,7 +954,7 @@ $(document).ready(() => {
 
         let time = new Date()
 
-        $.post('https://unique-mdt/newBolo', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/newBolo`, JSON.stringify({
             existing: existing,
             id: id,
             title: title,
@@ -1008,7 +1008,7 @@ $(document).ready(() => {
             let searchVal = $("#bolos-search-input").val()
             if (searchVal !== "") {
                 canSearchForProfiles = false
-                $.post('https://unique-mdt/searchBolos', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchBolos`, JSON.stringify({
                     searchVal: searchVal
                 }));
                 $(".bolos-items").empty();
@@ -1026,7 +1026,7 @@ $(document).ready(() => {
                 $(".bolos-search-refresh").empty();
                 $(".bolos-search-refresh").html("Refresh");
                 canRefreshBolo = true
-                $.post('https://unique-mdt/getAllBolos', JSON.stringify({}));
+                $.post(`https://${GetParentResourceName()}/getAllBolos`, JSON.stringify({}));
             }, 1500);
         }
     });
@@ -1106,7 +1106,7 @@ $(document).ready(() => {
         canInputBoloTag = true
         canInputBoloOfficerTag = true
         let id = $(this).data("id");
-        $.post('https://unique-mdt/getBoloData', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/getBoloData`, JSON.stringify({
             id: id
         }));
     })
@@ -1116,12 +1116,12 @@ $(document).ready(() => {
         if ($(this).data("info") != 0) {
             if ($(".badge-logo").attr('src') == 'https://cdn.discordapp.com/attachments/770324167894761522/912602342275301396/ems_badge.png') {
                 $(".bolos-items").find("[data-id='" + $(this).data("info") + "']").remove();
-                $.post('https://unique-mdt/deleteICU', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/deleteICU`, JSON.stringify({
                 id: $(this).data("info")
             }));
         }
         $(".bolos-items").find("[data-id='" + $(this).data("info") + "']").remove();
-        $.post('https://unique-mdt/deleteBolo', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/deleteBolo`, JSON.stringify({
             id: $(this).data("info"),
             time: new Date().getTime()
         }));
@@ -1131,7 +1131,7 @@ $(document).ready(() => {
 
     $(".contextmenu").on("click", ".incident-delete", function () { 
         $(".incidents-items").find("[data-id='" + $(this).data("info") + "']").remove();
-        $.post('https://unique-mdt/deleteIncident', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/deleteIncident`, JSON.stringify({
             id: $(this).data("info"),
             time: new Date().getTime()
         }));
@@ -1139,7 +1139,7 @@ $(document).ready(() => {
 
     $(".contextmenu").on("click", ".missing-delete", function () { 
         $(".missing-items").find("[data-id='" + $(this).data("info") + "']").remove();
-        $.post('https://unique-mdt/deleteMissing', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/deleteMissing`, JSON.stringify({
             id: $(this).data("info"),
             time: new Date().getTime()
         }));
@@ -1154,7 +1154,7 @@ $(document).ready(() => {
     });
 
     $(".contextmenu").on("click", ".profile-missing", function () { 
-        $.post('https://unique-mdt/missingCitizen', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/missingCitizen`, JSON.stringify({
             cid: $(this).data("info"),
             bool: new Date().getTime()
         }));
@@ -1162,7 +1162,7 @@ $(document).ready(() => {
 
     $(".contextmenu").on("click", ".report-delete", function () { 
         $(".reports-items").find("[data-id='" + $(this).data("info") + "']").remove();
-        $.post('https://unique-mdt/deleteReport', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/deleteReport`, JSON.stringify({
             id: $(this).data("info"),
             time: new Date().getTime()
         }));
@@ -1260,7 +1260,7 @@ $(document).ready(() => {
         setTimeout(() => {
             $(".close-all").css("filter", "brightness(30%)");
         }, 250);
-        $.post('https://unique-mdt/getPenalCode', JSON.stringify({}));
+        $.post(`https://${GetParentResourceName()}/getPenalCode`, JSON.stringify({}));
     });
 
     var shiftPressed = false;
@@ -1397,7 +1397,7 @@ $(document).ready(() => {
         $(`.associated-incidents-user-title:contains(${$(this).data("info")})`).parent().remove();
         const incidentId = $(".manage-incidents-editing-title").data("id")
         if (incidentId != 0) {
-            $.post('https://unique-mdt/removeIncidentCriminal', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/removeIncidentCriminal`, JSON.stringify({
                 cid: $(this).data("status"),
                 incidentId: incidentId
             }));
@@ -1625,7 +1625,7 @@ $(document).ready(() => {
                 $(".incidents-search-refresh").empty();
                 $(".incidents-search-refresh").html("Refresh");
                 canRefreshIncidents = true
-                $.post('https://unique-mdt/getAllIncidents', JSON.stringify({}));
+                $.post(`https://${GetParentResourceName()}/getAllIncidents`, JSON.stringify({}));
             }, 1500);
         }
     });
@@ -1634,7 +1634,7 @@ $(document).ready(() => {
         $(`.tag:contains(${$(this).data("info")})`).remove()
         let cid = $(".manage-profile-citizenid-input").val();
         if (cid) {
-            $.post('https://unique-mdt/removeProfileTag', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/removeProfileTag`, JSON.stringify({
                 cid: cid,
                 text: $(this).data("info")
             }));
@@ -1679,7 +1679,7 @@ $(document).ready(() => {
                 $(".reports-search-refresh").empty();
                 $(".reports-search-refresh").html("Refresh");
                 canRefreshReports = true
-                $.post('https://unique-mdt/getAllReports', JSON.stringify({}));
+                $.post(`https://${GetParentResourceName()}/getAllReports`, JSON.stringify({}));
             }, 1500);
         }
     });
@@ -1690,7 +1690,7 @@ $(document).ready(() => {
             $(".dispatch-comms-refresh").empty();
             $(".dispatch-comms-refresh").html("Refresh");
             canRefreshReports = true
-            $.post('https://unique-mdt/refreshDispatchMsgs', JSON.stringify({}));
+            $.post(`https://${GetParentResourceName()}/refreshDispatchMsgs`, JSON.stringify({}));
         }, 1500);
     })
     $(".reports-items").on("click", ".reports-item", function () {
@@ -1715,7 +1715,7 @@ $(document).ready(() => {
         canInputReportTag = true
         canInputReportOfficerTag = true
         let id = $(this).data("id");
-        $.post('https://unique-mdt/getReportData', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/getReportData`, JSON.stringify({
             id: id
         }));
     })
@@ -1886,7 +1886,7 @@ $(document).ready(() => {
             let name = $(this).val()
             if (name !== "") {
                 canSearchForReports = false
-                $.post('https://unique-mdt/searchReports', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchReports`, JSON.stringify({
                     name: name
                 }));
                 $(".reports-items").empty();
@@ -1924,7 +1924,7 @@ $(document).ready(() => {
 
         let time = new Date()
 
-        $.post('https://unique-mdt/newReport', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/newReport`, JSON.stringify({
             existing: existing,
             id: id,
             title: title,
@@ -1985,7 +1985,7 @@ $(document).ready(() => {
             let name = $("#weapons-search-input").val()
             if (name !== "") {
                 canSearchForVehicles = false
-                $.post('https://unique-mdt/searchWeapon', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchWeapon`, JSON.stringify({
                     name: name
                 }));
                 $(".weapons-items").empty();
@@ -1998,7 +1998,7 @@ $(document).ready(() => {
         if (e.keyCode === 13) {
             let name = $("#missing-search-input").val()
             if (name !== "") {
-                $.post('https://unique-mdt/searchMissing', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchMissing`, JSON.stringify({
                     name: name
                 }));
                 $(".missing-items").empty();
@@ -2012,7 +2012,7 @@ $(document).ready(() => {
             let name = $("#dmv-search-input").val()
             if (name !== "") {
                 canSearchForVehicles = false
-                $.post('https://unique-mdt/searchVehicles', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchVehicles`, JSON.stringify({
                     name: name
                 }));
                 $(".dmv-items").empty();
@@ -2022,19 +2022,19 @@ $(document).ready(() => {
     });
 
     $(".dmv-items").on("click", ".dmv-item", function () {
-        $.post('https://unique-mdt/getVehicleData', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/getVehicleData`, JSON.stringify({
             plate: $(this).data("plate")
         }));
     });
 
     $(".weapons-items").on("click", ".weapon-item", function () {
-        $.post('https://unique-mdt/getWeaponData', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/getWeaponData`, JSON.stringify({
             serialnumber: $(this).data("plate")
         }));
     });
 
     $(".missing-items").on("click", ".missing-item", function () {
-        $.post('https://unique-mdt/getMissingData', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/getMissingData`, JSON.stringify({
             id: $(this).data("dbid")
         }));
     });
@@ -2062,7 +2062,7 @@ $(document).ready(() => {
                     imageurl = newImageurl
                 }
 
-                $.post('https://unique-mdt/saveVehicleInfo', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/saveVehicleInfo`, JSON.stringify({
                     dbid: dbid,
                     plate: plate,
                     imageurl: imageurl,
@@ -2097,7 +2097,7 @@ $(document).ready(() => {
                 } else {
                     imageurl = newImageurl
                 }
-                $.post('https://unique-mdt/saveWeaponInfo', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/saveWeaponInfo`, JSON.stringify({
                     dbid: dbid,
                     serialnumber: serialnumber,
                     imageurl: imageurl,
@@ -2130,7 +2130,7 @@ $(document).ready(() => {
                 } else {
                     imageurl = newImageurl
                 }
-                $.post('https://unique-mdt/saveMissingInfo', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/saveMissingInfo`, JSON.stringify({
                     id: dbid,
                     imageurl: imageurl,
                     notes: notes
@@ -2144,7 +2144,7 @@ $(document).ready(() => {
         let tag = $(".vehicle-tags").find(".code5-tag")
         if ( tag.hasClass("red-tag")) {
             tag.removeClass('red-tag').addClass('green-tag'); 
-            $.post('https://unique-mdt/knownInformation', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/knownInformation`, JSON.stringify({
                 dbid: $(".vehicle-information-title-holder").data("dbid"),
                 type: "code5",
                 status: true,
@@ -2157,7 +2157,7 @@ $(document).ready(() => {
         let tag = $(".vehicle-tags").find(".code5-tag")
         if ( tag.hasClass("green-tag")) {
             tag.removeClass('green-tag').addClass('red-tag'); 
-            $.post('https://unique-mdt/knownInformation', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/knownInformation`, JSON.stringify({
                 dbid: $(".vehicle-information-title-holder").data("dbid"),
                 type: "code5",
                 status: false,
@@ -2201,7 +2201,7 @@ $(document).ready(() => {
         let tag = $(".vehicle-tags").find(".stolen-tag")
         if ( tag.hasClass("red-tag")) {
             tag.removeClass('red-tag').addClass('green-tag'); 
-            $.post('https://unique-mdt/knownInformation', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/knownInformation`, JSON.stringify({
                 dbid: $(".vehicle-information-title-holder").data("dbid"),
                 type: "stolen",
                 status: true,
@@ -2214,7 +2214,7 @@ $(document).ready(() => {
         let tag = $(".vehicle-tags").find(".stolen-tag")
         if ( tag.hasClass("green-tag")) {
             tag.removeClass('green-tag').addClass('red-tag'); 
-            $.post('https://unique-mdt/knownInformation', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/knownInformation`, JSON.stringify({
                 dbid: $(".vehicle-information-title-holder").data("dbid"),
                 type: "stolen",
                 status: false,
@@ -2264,13 +2264,13 @@ $(document).ready(() => {
             setTimeout(() => {
                 $("#profile-search-input:text").val(cid.toString());
                 canSearchForProfiles = false
-                $.post('https://unique-mdt/searchProfiles', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchProfiles`, JSON.stringify({
                     name: cid.toString()
                 }));
                 $(".profile-items").empty();
                 $('.profile-items').prepend(`<div class="profile-loader"></div>`);
                 setTimeout(() => {
-                    $.post('https://unique-mdt/getProfileData', JSON.stringify({
+                    $.post(`https://${GetParentResourceName()}/getProfileData`, JSON.stringify({
                         id: cid.toString()
                     }));
                 }, 250);
@@ -2288,13 +2288,13 @@ $(document).ready(() => {
             setTimeout(() => {
                 $("#incidents-search-input:text").val(incidentId.toString());
                 canSearchForProfiles = false
-                $.post('https://unique-mdt/searchIncidents', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/searchIncidents`, JSON.stringify({
                     incident: incidentId.toString()
                 }));
                 $(".incidents-items").empty();
                 $('.incidents-items').prepend(`<div class="profile-loader"></div>`);
                 setTimeout(() => {
-                    $.post('https://unique-mdt/getIncidentData', JSON.stringify({
+                    $.post(`https://${GetParentResourceName()}/getIncidentData`, JSON.stringify({
                         id: incidentId.toString()
                     }));
                 }, 250);
@@ -2332,14 +2332,14 @@ $(document).ready(() => {
         if (currentStatus == "10-8") {
             $(`[data-id="${info}"]`).find(".unit-status").html("10-7")
             $(`[data-id="${info}"]`).find(".unit-status").removeClass('green-status').addClass('yellow-status'); 
-            $.post('https://unique-mdt/toggleDuty', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/toggleDuty`, JSON.stringify({
                 cid: info,
                 status: 0
             }));
         } else if (currentStatus == "10-7") {
             $(`[data-id="${info}"]`).find(".unit-status").html("10-8")
             $(`[data-id="${info}"]`).find(".unit-status").removeClass('yellow-status').addClass('green-status'); 
-            $.post('https://unique-mdt/toggleDuty', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/toggleDuty`, JSON.stringify({
                 cid: info,
                 status: 1
             }));
@@ -2356,7 +2356,7 @@ $(document).ready(() => {
 
     $(".contextmenu").on("click", ".set-waypoint", function () { 
         let info = $(this).data("info")
-        $.post('https://unique-mdt/setWaypointU', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/setWaypointU`, JSON.stringify({
             cid: info,
         }));
     })
@@ -2393,21 +2393,21 @@ $(document).ready(() => {
 
     $(".contextmenu").on("click", ".set-waypoint", function () { 
         const callId = $(this).data("info")
-        $.post('https://unique-mdt/setWaypoint', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/setWaypoint`, JSON.stringify({
             callid: callId,
         }));
     })
 
     $(".contextmenu").on("click", ".call-attach", function () { 
         const callId = $(this).data("info")
-        $.post('https://unique-mdt/callAttach', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/callAttach`, JSON.stringify({
             callid: callId,
         }));
     })
 
     $(".contextmenu").on("click", ".call-detach", function () { 
         const callId = $(this).data("info")
-        $.post('https://unique-mdt/callDetach', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/callDetach`, JSON.stringify({
             callid: callId
         }));
     })
@@ -2415,14 +2415,14 @@ $(document).ready(() => {
     $(".contextmenu").on("click", ".remove-call", function () { 
         const callId = $(this).data("info")
         $(".active-calls-item").filter("[data-id='" + callId + "']").remove()
-        $.post('https://unique-mdt/removeCall', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/removeCall`, JSON.stringify({
             callid: callId
         }));
     })
 
     $(".contextmenu").on("click", ".attached-units", function () { 
         const callId = $(this).data("info")
-        $.post('https://unique-mdt/attachedUnits', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/attachedUnits`, JSON.stringify({
             callid: callId
         }));
     })
@@ -2433,7 +2433,7 @@ $(document).ready(() => {
             const callid = $(".respond-calls-container").data("id")
             e.preventDefault();
             const time = new Date()
-            $.post('https://unique-mdt/sendCallResponse', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/sendCallResponse`, JSON.stringify({
                 message: $(this).val(),
                 time: time.getTime(),
                 callid: callid
@@ -2444,7 +2444,7 @@ $(document).ready(() => {
 
     $(".contextmenu").on("click", ".respond-call", function () {
         const callId = $(this).data("info")
-        $.post('https://unique-mdt/getCallResponses', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/getCallResponses`, JSON.stringify({
             callid: callId
         }));
         /**$(".respond-calls").fadeIn(0)
@@ -2549,7 +2549,7 @@ $(document).ready(() => {
 
     $(".contextmenu").on("click", ".call-dispatch-detach", function () { 
         const cid = $(this).data("info")
-        $.post('https://unique-mdt/callDispatchDetach', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/callDispatchDetach`, JSON.stringify({
             callid: $(".dispatch-attached-units-container").attr("id"),
             cid: cid
         }));
@@ -2558,7 +2558,7 @@ $(document).ready(() => {
 
     $(".contextmenu").on("click", ".Set-Dispatch-Waypoint", function () { 
         const cid = $(this).data("info")
-        $.post('https://unique-mdt/setDispatchWaypoint', JSON.stringify({
+        $.post(`https://${GetParentResourceName()}/setDispatchWaypoint`, JSON.stringify({
             callid: $(".dispatch-attached-units-container").attr("id"),
             cid: cid
         }));
@@ -2611,7 +2611,7 @@ $(document).ready(() => {
         const time = $(".jail-input").val()
         if (time.length > 0) {
             let cid = $(".jail-container").data("id")
-            $.post('https://unique-mdt/jailPlayer', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/jailPlayer`, JSON.stringify({
                 cid: cid,
                 time: time
             }));
@@ -2632,7 +2632,7 @@ $(document).ready(() => {
             let name = $(`[data-id="${editingcallsign}"]`).find(".unit-name").html().replace( /\s*(?:\[[^\]]*\]|\([^)]*\))\s*/g, "" )
             let newunitname = `(${callsign}) ${name}`
             $(`[data-id="${editingcallsign}"]`).find(".unit-name").html(newunitname)
-            $.post('https://unique-mdt/setCallsign', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/setCallsign`, JSON.stringify({
                 cid: editingcallsign,
                 newcallsign: callsign
             }));
@@ -2694,7 +2694,7 @@ $(document).ready(() => {
         document.getElementById('draggedItem').innerHTML = "";
         dragging = false
         if (callId && draggedElement) {
-            $.post('https://unique-mdt/callDragAttach', JSON.stringify({
+            $.post(`https://${GetParentResourceName()}/callDragAttach`, JSON.stringify({
                 callid: callId,
                 cid: draggedElement
             }));
@@ -3172,7 +3172,7 @@ $(document).ready(() => {
                 }
                 LastName = value.name
             } else if ((BodyDisplay) == "none") {
-                $.post('https://unique-mdt/dispatchNotif', JSON.stringify({
+                $.post(`https://${GetParentResourceName()}/dispatchNotif`, JSON.stringify({
                     data: value,
                 }));
             }
@@ -3731,7 +3731,7 @@ $(document).ready(() => {
                     $(".bolos-search-refresh").empty();
                     $(".bolos-search-refresh").html("Refresh");
                     canRefreshBolo = true
-                    $.post('https://unique-mdt/getAllBolos', JSON.stringify({}));
+                    $.post(`https://${GetParentResourceName()}/getAllBolos`, JSON.stringify({}));
                 }, 1500);
             }
             $(".manage-bolos-editing-title").html("You are currently editing BOLO " + id);
@@ -3746,7 +3746,7 @@ $(document).ready(() => {
                     $(".reports-search-refresh").empty();
                     $(".reports-search-refresh").html("Refresh");
                     canRefreshReports = true
-                    $.post('https://unique-mdt/getAllReports', JSON.stringify({}));
+                    $.post(`https://${GetParentResourceName()}/getAllReports`, JSON.stringify({}));
                 }, 1500);
             }
             $(".manage-reports-editing-title").html("You are currently editing report " + id);
@@ -4066,19 +4066,19 @@ function fidgetSpinner(page) {
     $(".close-all").fadeOut(0)
     $(".container-load").fadeIn(0);
     if (page == '.bolos-page-container') {
-        $.post('https://unique-mdt/getAllBolos', JSON.stringify({}));
+        $.post(`https://${GetParentResourceName()}/getAllBolos`, JSON.stringify({}));
     }
     if (page == '.missing-page-container') {
-        $.post('https://unique-mdt/getAllMissing', JSON.stringify({}));
+        $.post(`https://${GetParentResourceName()}/getAllMissing`, JSON.stringify({}));
     }
     if (page == '.reports-page-container') {
-        $.post('https://unique-mdt/getAllReports', JSON.stringify({}));
+        $.post(`https://${GetParentResourceName()}/getAllReports`, JSON.stringify({}));
     }
     if (page == '.stafflogs-page-container') {
-        $.post('https://unique-mdt/getAllLogs', JSON.stringify({}));
+        $.post(`https://${GetParentResourceName()}/getAllLogs`, JSON.stringify({}));
     }
     if (page == '.incidents-page-container') {
-        $.post('https://unique-mdt/getAllIncidents', JSON.stringify({}));
+        $.post(`https://${GetParentResourceName()}/getAllIncidents`, JSON.stringify({}));
     }
     $(".container-load").fadeOut(0);
     $(page).fadeIn(0)  
@@ -4097,7 +4097,7 @@ setInterval(timeShit, 1000)
 function addTag(tagInput) {
     $('.tags-holder').prepend(`<div class="tag">${tagInput}</div>`);
 
-    $.post('https://unique-mdt/newTag', JSON.stringify({
+    $.post(`https://${GetParentResourceName()}/newTag`, JSON.stringify({
         id: $(".manage-profile-citizenid-input").val(),
         tag: tagInput
     }));
@@ -4106,7 +4106,7 @@ function addTag(tagInput) {
 
 function addWeapon(Input) {
     $('.weapons-holder').prepend(`<div class="tag">${Input}</div>`);
-    $.post('https://unique-mdt/newWeapon', JSON.stringify({
+    $.post(`https://${GetParentResourceName()}/newWeapon`, JSON.stringify({
         id: $(".manage-profile-citizenid-input").val(),
         serialnumber: Input
     }));
@@ -4164,7 +4164,7 @@ function expandImage(url) {
 function removeImage(url) {
     let cid = $(".manage-profile-citizenid-input").val();
     $(".gallery-inner-container img").filter("[src='" + url + "']").remove();
-    $.post('https://unique-mdt/removeGalleryImg', JSON.stringify({
+    $.post(`https://${GetParentResourceName()}/removeGalleryImg`, JSON.stringify({
         cid: cid,
         URL: url
     }));
